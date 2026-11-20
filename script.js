@@ -125,9 +125,64 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
   };
 });
 
+/* ===== Fotos con marco polaroid: se les quita el fondo blanco =====
+   Las fotos con marco de Canva (data-framed) vienen con un rectángulo blanco alrededor.
+   Antes se usaba "multiply" para hacerlo desaparecer, y eso volvía todo transparente
+   (se veía una foto a través de la otra). Ahora se borra ese blanco de verdad (solo el
+   que está AFUERA del marco, empezando desde los bordes) y la foto queda 100% opaca. */
+function cutout(src, img) {
+  try {
+    const w = src.naturalWidth, h = src.naturalHeight;
+    if (!w || !h) return false;
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const x = c.getContext('2d', { willReadFrequently: true });
+    x.drawImage(src, 0, 0);
+    const d = x.getImageData(0, 0, w, h), p = d.data;
+
+    const isBg = k => p[k + 3] < 10 || (p[k] > 236 && p[k + 1] > 236 && p[k + 2] > 236);
+    const outside = new Uint8Array(w * h);          // 1 = fondo exterior
+    const stack = [];
+    const seed = (px, py) => { const i = py * w + px; if (!outside[i] && isBg(i * 4)) { outside[i] = 1; stack.push(i); } };
+    for (let i = 0; i < w; i++) { seed(i, 0); seed(i, h - 1); }
+    for (let j = 0; j < h; j++) { seed(0, j); seed(w - 1, j); }
+    while (stack.length) {
+      const i = stack.pop(), px = i % w, py = (i - px) / w;
+      if (px > 0) seed(px - 1, py);
+      if (px < w - 1) seed(px + 1, py);
+      if (py > 0) seed(px, py - 1);
+      if (py < h - 1) seed(px, py + 1);
+    }
+
+    // 1) el fondo exterior pasa a transparente
+    for (let i = 0; i < outside.length; i++) if (outside[i]) p[i * 4 + 3] = 0;
+
+    // 2) suaviza el borde: los píxeles clarito pegados al fondo borrado se vuelven semitransparentes
+    //    (así no queda un halo blanco ni bordes "escalonados")
+    const edge = [];
+    for (let py = 0; py < h; py++) for (let px = 0; px < w; px++) {
+      const i = py * w + px;
+      if (outside[i]) continue;
+      if ((px > 0 && outside[i - 1]) || (px < w - 1 && outside[i + 1]) || (py > 0 && outside[i - w]) || (py < h - 1 && outside[i + w])) edge.push(i);
+    }
+    edge.forEach(i => {
+      const k = i * 4, m = Math.min(p[k], p[k + 1], p[k + 2]);
+      if (m > 140) p[k + 3] = Math.max(0, Math.round(255 * (1 - (m - 140) / 96)));
+    });
+
+    x.putImageData(d, 0, 0);
+    img.src = c.toDataURL('image/png');
+    img.classList.add('cutout');
+    return true;
+  } catch (err) {
+    console.warn('No se pudo recortar el fondo de la foto', err);   // pasa si se abre el archivo directo (file://); en GitHub funciona
+    return false;
+  }
+}
+
 /* ===== Fotos: busca automáticamente el archivo correcto =====
    Prueba: foto3.png, "foto 3.png", foto_3.png, .jpg, .jpeg, .webp (y mayúsculas).
-   Las que tienen data-framed (marco de Canva) reciben la clase "framed". */
+   Las que tienen data-framed (marco de Canva) reciben la clase "framed" y se les recorta el fondo. */
 const V = '1';
 const NAMES = n => [`foto${n}`, `foto ${n}`, `foto_${n}`];
 const EXTS = ['png', 'jpg', 'jpeg', 'webp', 'PNG', 'JPG', 'JPEG'];
@@ -146,7 +201,14 @@ function loadPhoto(img) {
     if (i >= list.length) { console.warn('No se encontró la foto', img.dataset.foto); return; }
     const probe = new Image();
     const url = list[i++];
-    probe.onload = () => { img.src = url; if (framed) img.classList.add('framed'); };
+    probe.onload = () => {
+      if (framed) {
+        img.classList.add('framed');
+        if (!cutout(probe, img)) img.src = url;   // si no se puede recortar, queda la foto original
+      } else {
+        img.src = url;
+      }
+    };
     probe.onerror = next;
     probe.src = url;
   };
