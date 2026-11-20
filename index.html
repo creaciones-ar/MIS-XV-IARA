@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MIS 15 AÑOS - VALENTINA</title>
-<link rel="stylesheet" href="styles.css?v=67">
+<title>MIS 15 AÑOS - IARA</title>
+<link rel="stylesheet" href="styles.css?v=1">
 <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Great+Vibes&family=Lato:wght@300;400;700&family=Pinyon+Script&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -27,13 +27,13 @@
 <!-- 1. BIENVENIDA + SOBRE (el póster de fondo se define en styles.css) -->
 <div id="welcome-screen">
   <div class="welcome-content">
-    <h1 class="neon">Valentina</h1>
+    <h1 class="neon">Iara</h1>
     <p class="welcome-sub">Mis quince años</p>
     <div id="envelope" class="envelope">
       <div class="env-back"></div>
       <div class="env-letter">
         <span class="letter-small">Mis quince años</span>
-        <span class="letter-name script">Valentina</span>
+        <span class="letter-name script">Iara</span>
         <span class="letter-line"></span>
         <span class="letter-small">Te invito a celebrar</span>
       </div>
@@ -47,7 +47,7 @@
         <i class="sp s1"></i><i class="sp s2"></i><i class="sp s3"></i><i class="sp s4"></i>
         <i class="sp s5"></i><i class="sp s6"></i><i class="sp s7"></i>
       </div>
-      <button id="open-btn" class="seal" aria-label="Abrir invitación"><span>V</span></button>
+      <button id="open-btn" class="seal" aria-label="Abrir invitación"><span>I</span></button>
     </div>
     <p class="welcome-hint">Toca el sello para abrir</p>
   </div>
@@ -60,8 +60,8 @@
 
   <!-- 2. PORTADA -->
   <section class="cover">
-    <!-- CAMBIO: nombre.png?v=2 (cada vez que reemplaces la imagen, subí el número: v=3, v=4...) -->
-    <h2 class="cover-name"><img src="nombre.png?v=2" alt="Valentina"></h2>
+    <!-- nombre.png = la palabra "Iara" hecha en Canva (si no está, se muestra como texto) -->
+    <h2 class="cover-name"><img src="nombre.png?v=1" alt="Iara" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'script big',textContent:this.alt}))"></h2>
     <div id="player" class="player">
       <input type="range" id="progress" min="0" max="100" value="0" aria-label="Progreso">
       <div class="controls">
@@ -75,32 +75,31 @@
         <button id="btn-repeat" class="on" aria-label="Repetir"><svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"/></svg></button>
       </div>
     </div>
-    <!-- CAMBIO: mis15.png?v=2 -->
-    <p class="mis15"><img src="mis15.png?v=2" alt="Mis 15 años"></p>
+    <p class="mis15"><img src="mis15.png?v=1" alt="Mis 15 años" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'script big',textContent:this.alt}))"></p>
   </section>
 
   <div class="respiro" aria-hidden="true"></div>
 
   <!-- 3. TEXTO + FOTOS -->
   <section class="story-section">
-    <p class="story-text">Mis 15 años marcan el comienzo de una nueva etapa, dejando atrás un capítulo, momentos, recuerdos y experiencias que siempre serán una parte de mí.<br>Para este nuevo comienzo preparo una noche para celebrar todo lo que viví y sentí, te espero para compartir mi noche.</p>
+    <p class="story-text">Hay recuerdos que no voy a borrar, personas que no voy a olvidar y momentos como este que siempre voy a guardar, porque son parte de mi vida, porque simplemente los quiero y es mi deseo que compartan conmigo la alegría de mis 15 años.</p>
     <div class="story-photos">
-      <img src="foto2.png" data-foto="2" data-framed alt="Valentina" class="polaroid p1">
-      <img src="foto1.png" data-foto="1" data-framed alt="Valentina" class="polaroid p2">
+      <img src="foto2.png" data-foto="2" data-framed alt="Iara" class="polaroid p1">
+      <img src="foto1.png" data-foto="1" data-framed alt="Iara" class="polaroid p2">
     </div>
   </section>
 
   <div class="respiro" aria-hidden="true"></div>
 
-  <!-- 4. FECHA + CUENTA REGRESIVA -->
+  <!-- 4. FECHA + CUENTA REGRESIVA (19 de diciembre de 2026 es SÁBADO) -->
   <section class="date-section">
     <img src="deco-flores.webp" alt="" class="deco deco-date" aria-hidden="true">
     <img data-icon="icono-calendario" alt="" class="ico-gif" aria-hidden="true" data-replay>
     <p class="date-month">Diciembre</p>
     <div class="date-row">
       <span>SÁBADO</span>
-      <div class="date-day"><b>12</b><small>2026</small></div>
-      <span>21:00 HS</span>
+      <div class="date-day"><b>19</b><small>2026</small></div>
+      <span>22:00 HS</span>
     </div>
     <h2 class="script big">Faltan</h2>
     <div id="countdown" class="countdown-grid">
@@ -115,12 +114,12 @@
 
   <!-- 5. LUGAR -->
   <section class="place-section">
-    <img src="foto3.png" data-foto="3" alt="Valentina" class="place-photo">
+    <img src="foto3.png" data-foto="3" alt="Iara" class="place-photo">
     <div class="place-info">
       <img data-icon="icono-ubicacion" alt="" class="ico-gif" aria-hidden="true">
       <h2 class="script big">Lugar del evento</h2>
-      <h3>Salón Multieventos</h3>
-      <p>Matheo Escribano 5412</p>
+      <h3>Barrio Julio Abraham</h3>
+      <p>Mz. R, Lote 6, Alderetes</p>
       <a id="maps-btn" class="btn solid hidden" target="_blank" rel="noopener" href="#">Ubicación</a>
     </div>
   </section>
@@ -132,9 +131,8 @@
   <img src="deco-petalos.webp" alt="" class="deco deco-dress" aria-hidden="true">
   <img data-icon="icono-vestimenta" alt="" class="ico-gif" aria-hidden="true">
   <p class="kicker">Dress code</p>
-  <h2 class="script big">Elegante</h2>
-  <p class="small-caps">Se reserva el color<br>azul noche<br>para la cumpleañera</p>
-  <div class="swatches"><i class="sw-claro"></i><i class="sw-medio"></i><i class="sw-noche"></i></div>
+  <p class="small-caps">Se reservan los colores<br>celeste y plateado<br>para la cumpleañera</p>
+  <div class="swatches"><i class="sw-plata"></i><i class="sw-celeste"></i></div>
   <p class="note">(en todas las tonalidades)</p>
 </section>
 
@@ -152,8 +150,8 @@
   <!-- 8. FOTOS -->
   <section class="duo">
     <img src="deco-flores.webp" alt="" class="deco deco-duo" aria-hidden="true">
-    <img src="foto4.png" data-foto="4" data-framed alt="Valentina" class="polaroid d1">
-    <img src="foto5.png" data-foto="5" data-framed alt="Valentina" class="polaroid d2">
+    <img src="foto4.png" data-foto="4" data-framed alt="Iara" class="polaroid d1">
+    <img src="foto5.png" data-foto="5" data-framed alt="Iara" class="polaroid d2">
   </section>
 
   <div class="respiro" aria-hidden="true"></div>
@@ -172,7 +170,7 @@
   <!-- 10. CIERRE -->
   <section class="closing">
     <p>Te espero para compartir mi noche única</p>
-    <p class="script big">Valentina</p>
+    <p class="script big">Iara</p>
   </section>
 
   </div>
@@ -198,7 +196,7 @@
     </div>
   </div>
 </div>
-  
-<script src="script.js?v=49"></script>
+
+<script src="script.js?v=1"></script>
 </body>
 </html>
