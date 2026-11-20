@@ -241,7 +241,7 @@ img.ico-gif:not([src]){display:none}
    11. CONFIRMACIÓN Y CIERRE
    ===================================================== */
 .rsvp{position:relative;display:flex;align-items:center;justify-content:center;padding:30px 0}
-.rsvp-card{width:100%;background:rgba(255,255,255,.7);border-radius:10px;padding:30px 12px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 6px 20px rgba(16,38,141,.1)}
+.rsvp-card{width:100%;background:linear-gradient(180deg,#e6f4fd 0%,#cde7f8 100%);border:1.5px solid rgba(255,255,255,.85);border-radius:10px;padding:30px 12px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 6px 20px rgba(16,38,141,.14)}   /* fondo celeste (para volver al blanco: background:rgba(255,255,255,.7)) */
 .rsvp-card .script.big{font-size:min(2.1rem,calc((min(100vw,480px) - 90px) / 10.6));line-height:1.15;color:var(--navy);white-space:nowrap}
 .rsvp-card .ico-gif{margin-bottom:0}
 .rsvp-card .note{opacity:1;animation:noteFloat 2.4s ease-in-out infinite}
