@@ -1,4 +1,4 @@
-/* VERSION IARA 1.0 — modelo Valentina, azul #10268d, marco celeste (fondo-arriba / fondo-tile / fondo-abajo) */
+/* VERSION IARA 1.1 — modelo Valentina, azul #10268d, marco celeste (fondo-arriba / fondo-tile / fondo-abajo) */
 @font-face{font-family:'Slight';src:url('Slight.woff2') format('woff2'),url('Slight.otf') format('opentype'),url('Slight.ttf') format('truetype');font-display:swap}
 
 /* =====================================================
@@ -168,12 +168,16 @@ body{font-family:'Lato',sans-serif;color:var(--navy);text-align:center;line-heig
    ===================================================== */
 .story-section{display:flex;align-items:center;gap:6px;padding:var(--sec-y) 0}
 .story-text{flex:1 1 0;min-width:0;align-self:center;text-align:center;font-style:normal;font-weight:500;font-size:1.15rem;line-height:1.55;letter-spacing:.01em;color:var(--navy)}
-.story-photos{flex:0 0 52%;display:flex;flex-direction:column;align-items:flex-end}
+.story-photos{flex:0 0 52%;display:flex;flex-direction:column;align-items:flex-end;isolation:isolate}
 .polaroid{display:block;width:100%;height:auto;border:6px solid var(--navy);box-shadow:0 8px 18px rgba(16,38,141,.3)}
 .p1{transform:rotate(3deg);position:relative;z-index:1}
 .p2{transform:rotate(-3deg);margin-top:-14px;position:relative;z-index:2}
-/* las fotos "framed" ya traen su marco de polaroid con fondo blanco: multiply hace que el blanco desaparezca */
+
+/* Fotos con marco de Canva (data-framed).
+   Mientras se prepara el recorte (o si no se puede recortar) usan "multiply" para que el blanco no se note.
+   Cuando el script les saca el fondo blanco (clase "cutout") pasan a ser 100% opacas: la de arriba tapa a la de abajo. */
 .polaroid.framed{border:0;background:none;box-shadow:none;transform:none;mix-blend-mode:multiply}
+.polaroid.framed.cutout{mix-blend-mode:normal;filter:drop-shadow(0 6px 10px rgba(16,38,141,.28))}
 .story-photos .polaroid.framed.p1{transform:translateX(4px);position:relative;z-index:1}
 .story-photos .polaroid.framed.p2{margin-top:-34px;transform:translateX(-8px);position:relative;z-index:2}
 
@@ -223,11 +227,13 @@ img.ico-gif:not([src]){display:none}
 
 /* =====================================================
    10. DOS FOTOS FINALES
+   Ahora quedan DENTRO de la parte blanca del marco (sin márgenes negativos),
+   así no se montan sobre los bordes celestes.
    ===================================================== */
 .duo{position:relative;display:flex;flex-direction:column;padding:calc(var(--sec-y)*.6) 0 var(--sec-y);overflow:hidden}
-.duo .polaroid{position:relative;width:66%}
-.duo .d1{align-self:flex-start;margin-left:-3%;z-index:1}
-.duo .d2{align-self:flex-end;margin-right:-3%;margin-top:-44px;z-index:2}
+.duo .polaroid{position:relative;width:62%}
+.duo .d1{align-self:flex-start;margin-left:2%;z-index:1}
+.duo .d2{align-self:flex-end;margin-right:2%;margin-top:-44px;z-index:2}
 .duo .polaroid:not(.framed).d1{transform:rotate(-4deg)}
 .duo .polaroid:not(.framed).d2{transform:rotate(3deg);margin-top:10px}
 
@@ -242,7 +248,8 @@ img.ico-gif:not([src]){display:none}
 @keyframes noteFloat{0%,100%{opacity:1;transform:translateY(0)}50%{opacity:.45;transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.rsvp-card .note{animation:none}}
 .closing{padding:20px 0 calc(var(--col)*.62);display:flex;flex-direction:column;gap:14px}   /* deja lugar para las flores de abajo */
-.closing p:not(.script){font-weight:500;font-size:1.4rem;line-height:1.6;color:var(--navy);text-wrap:balance}
+/* el texto va en dos líneas (hay un <br> en el HTML) y se corre un poco a la izquierda: así no toca la mariposa */
+.closing p:not(.script){font-weight:500;font-size:1.4rem;line-height:1.5;color:var(--navy);max-width:78%;margin:0 auto;padding-right:4%}
 .closing .script.big{font-size:3.2rem;color:var(--navy)}
 
 /* =====================================================
