@@ -1,15 +1,15 @@
 /* ===== CONFIGURACIÓN (editar solo acá) ===== */
 const CONFIG = {
-  fecha: "December 12, 2026 21:00:00",        // sábado 12 de diciembre, 21:00 (HORA PROVISORIA: confirmar con Valentina)
-  youtubeId: "Zg8L-Pfroww",                   // código del video de YouTube de la canción. Vacío = no aparece el reproductor
-  inicio: 15,                                 // segundo desde el que suena la canción (30 = salta la intro)
-  whatsapp: "5491158265942",                  // 54 + 9 + número (CONFIRMAR que sea el de Valentina)
-  mapsUrl: "https://maps.app.goo.gl/wMsCjcH23YjNU4ht8?g_st=aw",   // link de Google Maps del salón. Vacío = no aparece el botón
-  alias: "valen.zof",                         // alias o CBU (CONFIRMAR). Vacío = no aparece la sección de regalos
-  cvu: "0000003100015179991057",              // CVU o CBU. Vacío = no aparece esa fila
-  titular: "Valentina Jazmín Zof",            // nombre del titular de la cuenta
-  confirmarAntes: "Confirmar antes del 1 de diciembre",   // Vacío = no aparece
-  mensajeWa: "Hola! Confirmo mi asistencia a los XV de Valentina"
+  fecha: "December 19, 2026 22:00:00",        // sábado 19 de diciembre, 22:00
+  youtubeId: "BDwEyfgClF4",                   // código del video de YouTube de la canción. Vacío = no aparece el reproductor
+  inicio: 0,                                  // segundo desde el que suena la canción (15 = salta los primeros 15 segundos)
+  whatsapp: "5493815476047",                  // 54 + 9 + número
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Barrio+Julio+Abraham+Alderetes+Tucum%C3%A1n",   // PENDIENTE: reemplazar por el link exacto de Google Maps. Vacío = no aparece el botón
+  alias: "",                                  // PENDIENTE: alias de Iara. Vacío = no aparece la sección de regalos
+  cvu: "",                                    // CVU o CBU. Vacío = no aparece esa fila
+  titular: "",                                // nombre del titular de la cuenta
+  confirmarAntes: "Confirmar antes del 14 de diciembre",   // Vacío = no aparece
+  mensajeWa: "Hola! Confirmo mi asistencia a los XV de Iara"
 };
 
 const $ = id => document.getElementById(id);
@@ -46,7 +46,7 @@ window.onYouTubeIframeAPIReady = () => {
     events: {
       onReady: () => { ready = true; if (wantPlay) yt.playVideo(); },
       onStateChange: e => {
-        if (e.data === YT.PlayerState.ENDED && $('btn-repeat').classList.contains('on')) { yt.seekTo(CONFIG.inicio, true); yt.playVideo(); return; }   // al terminar, vuelve a empezar sin la intro
+        if (e.data === YT.PlayerState.ENDED && $('btn-repeat').classList.contains('on')) { yt.seekTo(CONFIG.inicio, true); yt.playVideo(); return; }   // al terminar, vuelve a empezar
         const playing = e.data === YT.PlayerState.PLAYING;
         playBtn.classList.toggle('playing', playing);
         clearInterval(ticker);
@@ -128,7 +128,7 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
 /* ===== Fotos: busca automáticamente el archivo correcto =====
    Prueba: foto3.png, "foto 3.png", foto_3.png, .jpg, .jpeg, .webp (y mayúsculas).
    Las que tienen data-framed (marco de Canva) reciben la clase "framed". */
-const V = '15';
+const V = '1';
 const NAMES = n => [`foto${n}`, `foto ${n}`, `foto_${n}`];
 const EXTS = ['png', 'jpg', 'jpeg', 'webp', 'PNG', 'JPG', 'JPEG'];
 
@@ -155,7 +155,6 @@ function loadPhoto(img) {
 
 document.querySelectorAll('img[data-foto]').forEach(loadPhoto);
 
-
 /* ===== Texto de la historia: mismo alto que las dos fotos =====
    Ajusta el tamaño de letra hasta que el texto empiece a la altura de la 1ª foto
    y termine a la altura de la 2ª (en cualquier celular). */
@@ -163,8 +162,8 @@ function fitStory() {
   const t = document.querySelector('.story-text');
   const box = document.querySelector('.story-photos');
   if (!t || !box || !box.offsetHeight) return;      // todavía oculto o sin cargar
- const target = box.offsetHeight * 0.96;
-let lo = 11, hi = 28;
+  const target = box.offsetHeight * 0.96;
+  let lo = 11, hi = 28;
   for (let i = 0; i < 12; i++) {
     const mid = (lo + hi) / 2;
     t.style.fontSize = mid + 'px';
@@ -175,7 +174,6 @@ let lo = 11, hi = 28;
 document.querySelectorAll('.story-photos img').forEach(i => i.addEventListener('load', fitStory));
 window.addEventListener('resize', fitStory);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitStory);
-
 
 /* ===== Al volver de Google Maps u otra app, la música sigue sola ===== */
 function resumeMusic() {
